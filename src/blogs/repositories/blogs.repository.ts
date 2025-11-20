@@ -13,7 +13,7 @@ export const blogsRepository = {
         db.blogs.push(newBlog);
         return newBlog;
     },
-    updateBlog(id: string, dto: Blog): void {
+    updateBlog(id: string, dto: BlogInputDto): void {
         const blog: Blog | undefined = db.blogs.find((b: Blog) => b.id === id);
         if (!blog) {
             throw new Error("Blog not found.");

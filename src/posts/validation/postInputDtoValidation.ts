@@ -38,7 +38,7 @@ export const postInputDtoValidation = (data: PostInputDto) :ValidationError[] =>
 
     return errors;
 }
-function isValidId (id: string): boolean {
+export function isValidId (id: string): boolean {
     const idInt = parseInt(id);
     if(idInt < 0 || isNaN(idInt)){
         return false;
