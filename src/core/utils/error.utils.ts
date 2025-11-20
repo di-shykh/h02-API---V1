@@ -1,4 +1,4 @@
-import {ValidationError} from "./ValidationError";
+import {ValidationError} from "./validationError";
 
 export const createErrorMessages = (errors: ValidationError[]): { errorsMessages: ValidationError[] } => {
     return { errorsMessages: errors };

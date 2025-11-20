@@ -10,7 +10,7 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",
+    "module": "CommonJS",
     "target": "es2016",
     "types": [],
     // For nodejs:
@@ -38,12 +38,14 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
   "include": ["src/**/*"],
-  "exclude": ["__tests__", "dist", "node_modules"]
+  "exclude": ["__tests__", "dist",
+    "./node_modules"
+  ]
 }
