@@ -2,7 +2,7 @@ import {Post} from "../types/post";
 import {PostInputDto} from "../dto/post.input-dto";
 import {db} from "../../db/in-memory.db";
 
-export const blogsRepository = {
+export const postsRepository = {
     findAllPosts(): Post[] {
         return db.posts;
     },
