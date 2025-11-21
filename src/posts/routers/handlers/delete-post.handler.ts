@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
 import {HttpStatus} from "../../../core/types/http-statuses";
 import {createErrorMessages} from "../../../core/utils/error.utils";
-import {blogsRepository} from "../../repositories/blogs.repository";
-import {isValidId} from "../../../posts/validation/postInputDtoValidation";
+import {postsRepository} from "../../repositories/posts.repository";
+import {isValidId} from "../../validation/postInputDtoValidation";
 
 export function deletePostHandler(req: Request, res: Response) {
     const id = req.params.id;
@@ -10,11 +10,11 @@ export function deletePostHandler(req: Request, res: Response) {
         res.status(HttpStatus.NotFound).send(createErrorMessages([{field: "id", message: "Invalid id"}]));
         return;
     }
-    const blog = blogsRepository.findBlogById(id);
+    const blog = postsRepository.findPostById(id);
     if(!blog){
-        res.status(HttpStatus.NotFound).send(createErrorMessages([{field: "id", message: "Blog not found"}]));
+        res.status(HttpStatus.NotFound).send(createErrorMessages([{field: "id", message: "Post not found"}]));
         return;
     }
-    blogsRepository.deleteBlog(id);
+    postsRepository.deletePost(id);
     res.sendStatus(HttpStatus.NoContent);
 }

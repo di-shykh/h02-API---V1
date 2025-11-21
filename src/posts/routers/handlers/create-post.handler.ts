@@ -23,12 +23,7 @@ export function createPostHandler(req: Request<{},{},PostInputDto>, res: Respons
 
     const blog: Blog | null = blogsRepository.findBlogById(req.body.blogId);
     if (!blog) {
-        res.status(HttpStatus.BadRequest).send({
-            errorsMessages: [{
-                message: "Blog not found",
-                field: "blogId"
-            }]
-        });
+        res.status(HttpStatus.BadRequest).send(createErrorMessages([{field: "blogId", message: "Blog not found"}]));
         return;
     }
 
