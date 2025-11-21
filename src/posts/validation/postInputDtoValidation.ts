@@ -1,5 +1,6 @@
 import {PostInputDto} from "../dto/post.input-dto";
 import {ValidationError} from "../../core/utils/validationError";
+import {blogsRepository} from "../../blogs/repositories/blogs.repository";
 
 export const postInputDtoValidation = (data: PostInputDto) :ValidationError[] => {
     const errors: ValidationError[] = [];
@@ -31,17 +32,23 @@ export const postInputDtoValidation = (data: PostInputDto) :ValidationError[] =>
     if(
         !data.blogId ||
         typeof data.blogId !== "string" ||
-        !isValidId(data.blogId)
+        !isValidId(data.blogId) ||
+        isValidId(data.blogId)
     ){
         errors.push({field: "blogId", message: "Invalid blogId"});
     }
 
     return errors;
 }
+//возможно не нужна
 export function isValidId (id: string): boolean {
     const idInt = parseInt(id);
     if(idInt < 0 || isNaN(idInt)){
         return false;
     }
     return true;
+}
+export function isBlogIdExist(blogId: string): boolean {
+    const blog = blogsRepository.findBlogById(blogId);
+    return !!blog;
 }
