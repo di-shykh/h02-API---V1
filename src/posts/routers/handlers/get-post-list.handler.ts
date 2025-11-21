@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
 import {HttpStatus} from "../../../core/types/http-statuses";
-import {blogsRepository} from "../../repositories/blogs.repository";
+import {postsRepository} from "../../repositories/posts.repository";
+import {Post} from "../../types/post";
 
 export function getPostListHandler(req: Request, res: Response) {
-    const blogs = blogsRepository.findAllBlogs();
-    res.status(HttpStatus.Ok).send(blogs);
+    const posts: Post[] = postsRepository.findAllPosts();
+    res.status(HttpStatus.Ok).send(posts);
 }
