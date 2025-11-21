@@ -1,27 +1,46 @@
 import {Request, Response} from "express";
-import {BlogInputDto} from "../../dto/blog.input-dto";
+import {PostInputDto} from "../../dto/post.input-dto";
 import {HttpStatus} from "../../../core/types/http-statuses";
 import {createErrorMessages} from "../../../core/utils/error.utils";
-import {blogInputDtoValidation} from "../../validation/blogInputDtoValidation";
-import {blogsRepository} from "../../repositories/blogs.repository";
-import {isValidId} from "../../../posts/validation/postInputDtoValidation";
+import {postInputDtoValidation} from "../../validation/postInputDtoValidation";
+import {blogsRepository} from "../../../blogs/repositories/blogs.repository";
+import {postsRepository} from "../../repositories/posts.repository";
+import {isValidId} from "../../validation/postInputDtoValidation";
+import {Post} from "../../types/post";
+import {Blog} from "../../../blogs/types/blog";
 
-export function updatePostHandler(req: Request<{id: string}, {}, BlogInputDto>, res: Response) {
+export function updatePostHandler(req: Request<{id: string}, {}, PostInputDto>, res: Response) {
     const id = req.params.id;
     if(!id || !isValidId(id)){
         res.status(HttpStatus.BadRequest).send(createErrorMessages([{field: "id", message: "Invalid id"}]));
         return;
     }
-    const errors = blogInputDtoValidation(req.body);
+    const errors = postInputDtoValidation(req.body);
     if (errors.length > 0) {
         res.status(HttpStatus.BadRequest).send(createErrorMessages(errors));
         return;
     }
-    const blog = blogsRepository.findBlogById(id);
-    if(!blog){
-        res.status(HttpStatus.NotFound).send(createErrorMessages([{ field: 'id', message: 'Blog not found' }]));
+    const post:Post | null = postsRepository.findPostById(id);
+    if(!post){
+        res.status(HttpStatus.NotFound).send(createErrorMessages([{ field: 'id', message: 'Post not found' }]));
         return;
     }
-    blogsRepository.updateBlog(id, req.body);
+    const blog: Blog | null = blogsRepository.findBlogById(req.body.blogId);
+    if (!blog) {
+        res.status(HttpStatus.BadRequest).send(createErrorMessages([{
+            field: "blogId",
+            message: "Blog not found"
+        }]));
+        return;
+    }
+    const updatedPost: Post = {
+        ...post,
+        title: req.body.title,
+        shortDescription: req.body.shortDescription,
+        content: req.body.content,
+        blogId: req.body.blogId,
+        blogName: blog.name,
+    }
+    postsRepository.updatePost(id, updatedPost);
     res.sendStatus(HttpStatus.NoContent);
 }
