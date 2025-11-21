@@ -3,10 +3,7 @@ import {BlogInputDto} from "../../dto/blog.input-dto";
 import {HttpStatus} from "../../../core/types/http-statuses";
 import {createErrorMessages} from "../../../core/utils/error.utils";
 import {db} from "../../../db/in-memory.db";
-import {postInputDtoValidation} from "../../validation/postInputDtoValidation";
 import {Blog} from "../../types/blog";
-import {Post} from "../../types/post";
-import {postsRepository} from "../../repositories/posts.repository";
 import {PostInputDto} from "../../dto/post.input-dto";
 import {postInputDtoValidation} from "../../validation/postInputDtoValidation";
 
@@ -27,10 +24,7 @@ export function createPostHandler(req: Request<{},{},PostInputDto>, res: Respons
        shortDescription: req.body.shortDescription,
        content: req.body.content,
        blogId: req.body.blogId,
-       //blogName: req.body.blogName,
    };
-   postsRepository.createBlog(newPost);
-   res.status(HttpStatus.Created).send(newPost);
 }
 // export type Post = {
 //     id: string;
