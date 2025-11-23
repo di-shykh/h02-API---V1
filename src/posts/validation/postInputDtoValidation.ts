@@ -33,7 +33,7 @@ export const postInputDtoValidation = (data: PostInputDto) :ValidationError[] =>
         !data.blogId ||
         typeof data.blogId !== "string" ||
         !isValidId(data.blogId) ||
-        isValidId(data.blogId)
+        !isBlogIdExist(data.blogId)
     ){
         errors.push({field: "blogId", message: "Invalid blogId"});
     }
