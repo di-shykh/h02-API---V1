@@ -5,7 +5,7 @@ import {HttpStatus} from "../../src/core/types/http-statuses";
 
 export async function clearDb(app: Express): Promise<void> {
     await request(app)
-    .delete(`/${TESTING_PATH}/all-data`)
+    .delete(`${TESTING_PATH}/all-data`)
     .expect(HttpStatus.NoContent);
     return
 }

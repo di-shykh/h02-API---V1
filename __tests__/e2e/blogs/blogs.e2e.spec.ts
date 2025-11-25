@@ -27,8 +27,8 @@ describe("Blogs API", () => {
             websiteUrl: "https://www.blogsNew.com/",
         }
 
-        await request(app)
-            .post(BLOGS_PATH)
+        const result = await request(app)
+            .post(`${BLOGS_PATH}`)
             .set('Authorization', adminToken)
             .send(newBlog)
             .expect(HttpStatus.Created);
@@ -74,8 +74,9 @@ describe("Blogs API", () => {
         const createRespose = await request(app)
             .post(BLOGS_PATH)
             .set('Authorization', adminToken)
-            .send({...testBlogData, name: "Another Blog name", description: "Another Blog description"})
+            .send({...testBlogData, name: "Another Blog", description: "Another Blog description"})
             .expect(HttpStatus.Created);
+
 
         const blogUpadateData: BlogInputDto = {
             name: "Updated name",
@@ -104,7 +105,7 @@ describe("Blogs API", () => {
           }  = await request(app)
               .post(BLOGS_PATH)
             .set('Authorization', adminToken)
-            .send({...testBlogData, name: "Another Blog name"})
+            .send({...testBlogData, name: "Another Blog"})
             .expect(HttpStatus.Created);
 
           await request(app)

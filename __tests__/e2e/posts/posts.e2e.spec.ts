@@ -125,7 +125,7 @@ describe("Posts API", () => {
         } = await request(app)
             .post(BLOGS_PATH)
             .set('Authorization', adminToken)
-            .send({...testBlogData,name: "Blog name New"})
+            .send({...testBlogData,name: "Blog name2"})
             .expect(HttpStatus.Created);
 
         const createRespose = await request(app)
@@ -138,6 +138,7 @@ describe("Posts API", () => {
                 blogId: createdBlogId,
             })
             .expect(HttpStatus.Created);
+        console.log(createRespose.body);
 
         const postUpdateData: PostInputDto = {
             title: "Another post title",
@@ -167,7 +168,7 @@ describe("Posts API", () => {
           }  = await request(app)
               .post(BLOGS_PATH)
             .set('Authorization', adminToken)
-            .send({...testBlogData, name: "Another Blog name"})
+            .send({...testBlogData, name: "Another Blog"})
             .expect(HttpStatus.Created);
 
        const {
