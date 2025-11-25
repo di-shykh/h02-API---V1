@@ -4,8 +4,9 @@ import {HttpStatus} from "../../core/types/http-statuses";
 
 export const testingRouter: Router = Router({});
 
-testingRouter.delete('/all-data', (req: Request, res: Response) => {
+testingRouter.delete('/all-data', (req: Request, res: Response): void => {
+    console.log('✅ Testing endpoint called'); // для диагностики
     db.blogs = [];
     db.posts = [];
-    res.status(HttpStatus.NoContent);
+    res.sendStatus(HttpStatus.NoContent);
 })

@@ -16,5 +16,10 @@ export const setupApp = (app: Express) => {
     app.use(POSTS_PATH, postsRouter);
     app.use(TESTING_PATH,testingRouter);
 
+    console.log('✅ Routers initialized:'); // 🔥
+    console.log('- Blogs:', BLOGS_PATH);
+    console.log('- Posts:', POSTS_PATH);
+    console.log('- Testing:', TESTING_PATH);
+
     return app;
 }
