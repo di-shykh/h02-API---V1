@@ -55,7 +55,7 @@ describe ('Blog API body validation check',() => {
                 websiteUrl: "https://.com/",
             })
             .expect(HttpStatus.BadRequest);
-        expect(invalidDataSet1.body.errorsMessages).toHaveLength(3);
+        expect(invalidDataSet3.body.errorsMessages).toHaveLength(3);
 
         //check that nothing were created
         const blogResponse = await request(app)
@@ -69,8 +69,10 @@ describe ('Blog API body validation check',() => {
         } = await request(app)
             .post(BLOGS_PATH)
             .set('Authorization', adminToken)
-            .send({correctTestBlogData})
+            .send({...correctTestBlogData})
             .expect(HttpStatus.Created);
+        console.log(createdBlogId);
+
         const invalidDataSet1 = await request(app)
             .put(`${BLOGS_PATH}/${createdBlogId}`)
             .set('Authorization', adminToken)
@@ -105,7 +107,7 @@ describe ('Blog API body validation check',() => {
                 websiteUrl: "https://.com/",
             })
             .expect(HttpStatus.BadRequest);
-        expect(invalidDataSet1.body.errorsMessages).toHaveLength(3);
+        expect(invalidDataSet3.body.errorsMessages).toHaveLength(3);
 
         const blogResponse = await request(app)
             .get(`${BLOGS_PATH}/${createdBlogId}`)

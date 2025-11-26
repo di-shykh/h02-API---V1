@@ -28,7 +28,7 @@ describe("Blogs API", () => {
         }
 
         const result = await request(app)
-            .post(`${BLOGS_PATH}`)
+            .post(BLOGS_PATH)
             .set('Authorization', adminToken)
             .send(newBlog)
             .expect(HttpStatus.Created);
