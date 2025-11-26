@@ -138,7 +138,6 @@ describe("Posts API", () => {
                 blogId: createdBlogId,
             })
             .expect(HttpStatus.Created);
-        console.log(createRespose.body);
 
         const postUpdateData: PostInputDto = {
             title: "Another post title",
@@ -157,9 +156,11 @@ describe("Posts API", () => {
             .get(`${POSTS_PATH}/${createRespose.body.id}`)
             .set('Authorization', adminToken);
 
+        const blogName = postResponse.body.blogName;
         expect(postResponse.body).toEqual({
             ...postUpdateData,
             id: postResponse.body.id,
+            blogName: blogName,
         });
     });
     it('DELETE /ht_02/api/posts/:id and check after NOT FOUND',async () => {

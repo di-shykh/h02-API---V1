@@ -64,7 +64,7 @@ describe ('Post API body validation check',() => {
                 blogId: "1000",
             })
             .expect(HttpStatus.BadRequest);
-        expect(invalidDataSet1.body.errorsMessages).toHaveLength(4);
+        expect(invalidDataSet3.body.errorsMessages).toHaveLength(4);
 
         //check that nothing were created
         const postResponse = await request(app)
@@ -78,7 +78,7 @@ describe ('Post API body validation check',() => {
         } = await request(app)
             .post(BLOGS_PATH)
             .set('Authorization', adminToken)
-            .send({correctTestBlogData})
+            .send(correctTestBlogData)
             .expect(HttpStatus.Created);
 
         const {
@@ -126,15 +126,18 @@ describe ('Post API body validation check',() => {
                 blogId: "1000",
             })
             .expect(HttpStatus.BadRequest);
-        expect(invalidDataSet1.body.errorsMessages).toHaveLength(4);
+        expect(invalidDataSet3.body.errorsMessages).toHaveLength(4);
 
         const postResponse = await request(app)
             .get(`${POSTS_PATH}/${createdPostId}`)
-            .set('Authorization', adminToken)
+            .set('Authorization', adminToken);
+
+        const blogName = postResponse.body.blogName;
         expect(postResponse.body).toEqual({
             ...correctTestPostData,
             id: createdPostId,
             title: correctTestPostData.title,
+            blogName: blogName,
         });
     });
 })
